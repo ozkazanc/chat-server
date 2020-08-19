@@ -19,7 +19,11 @@ def clientthread(conn, addr):
 			else:
 				print("\"{0}\" client changed name to \"{1}\"".format(clientName, name))               
 				clientName = name
-		
+		elif message.find("<exit>") == 0:
+			print("\"{0}\" has left the chat.".format(clientName))
+			broadcast("\"{0}\" has left the chat.".format(clientName), conn)
+			remove(conn)
+
 		elif message: 
                     print("<" + clientName + "> " + message) 
  

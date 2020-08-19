@@ -12,9 +12,9 @@ if len(sys.argv) != 3:
 IP_address = str(sys.argv[1]) 
 Port = int(sys.argv[2]) 
 server.connect((IP_address, Port)) 
-  
-while True: 
-  
+
+done = False
+while not done: 
     # maintains a list of possible input streams 
     sockets_list = [sys.stdin, server] 
 
@@ -24,10 +24,12 @@ while True:
         if socks == server: 
             message = socks.recv(2048) 
             print(message)
-        
-	else: 
-            message = sys.stdin.readline() 
+		
+        else: 
+            message = sys.stdin.readline()
             server.send(message) 
+            if message.find("<exit>") == 0:
+                done = True
             sys.stdout.write("<You> ") 
             sys.stdout.write(message) 
             sys.stdout.flush()
